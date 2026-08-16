@@ -1,3 +1,28 @@
+export {};
+
+interface CalculateValues {
+  value1: number;
+  value2: number;
+}
+
+declare const process: {
+  argv: string[];
+};
+
+const parseArguments = (args: string[]): CalculateValues => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+  if (args.length > 4) throw new Error('Too many arguments');
+
+  if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+    return {
+      value1: Number(args[2]),
+      value2: Number(args[3])
+    }
+  } else {
+    throw new Error('Provided values were not numbers!');
+  }
+}
+
 const calculateBmi = (height: number, weight: number): string => {
     const heightInM = height/100;
     const bmi = weight / (heightInM * heightInM);
@@ -12,7 +37,8 @@ const calculateBmi = (height: number, weight: number): string => {
 }
 
 try {
-  console.log(calculateBmi(180, 74));
+    const { value1, value2 } = parseArguments(process.argv);
+    console.log(calculateBmi(value1, value2));
 } catch (error: unknown) {
   let errorMessage = 'Something went wrong: ';
   if (error instanceof Error) {

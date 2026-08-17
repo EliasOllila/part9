@@ -32,6 +32,10 @@ interface ExerciseRequestBody {
   target: unknown;
 }
 
+app.get('/hello', (_req, res) => {
+  res.send('Hello Full Stack!');
+});
+
 app.post('/exercises', (req, res) => {
   const { daily_exercises, target } = req.body as ExerciseRequestBody;
 
@@ -54,7 +58,7 @@ app.post('/exercises', (req, res) => {
   res.json(result);
 });
 
-const PORT = 3003;
+const PORT = 3000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
